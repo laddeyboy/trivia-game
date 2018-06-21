@@ -26,3 +26,18 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.DQ-question {
+  font-size: 12px;
+  border: 1px solid black;
+  padding-bottom: 10px;
+}
+
+.Ans-btn {
+  margin-left: 3px;
+}
+.Ans-btnSelected {
+  margin-left: 3px;
+  background-color: green;
+  color: white;
+}

@@ -1,23 +1,41 @@
 import React, {Component} from 'react'
 
 class DisplayAnswers extends Component {
-  
-    parseAnswerData () {
-    var ansArr = [];
-      ansArr.push({'answer': this.props.correctAns, 'correct': true});
-      for(let i = 0; i < this.props.otherAns.length; i++){
-        ansArr.push({'answer': this.props.otherAns[i], 'correct': false})
-      }
-    return ansArr;
+  constructor (props) {
+    super(props)
+    this.state = {
+      buttonclass: 'Ans-btn'
+    }
+    this.onHandleAnswerClick = this.onHandleAnswerClick.bind(this)
+  }
+  parseAnswerData () {
+    var ansArr = []
+    ansArr.push(this.props.correctAns)
+    for (let i = 0; i < this.props.otherAns.length; i++) {
+      ansArr.push(this.props.otherAns[i])
+    }
+    return ansArr
+  }
+
+  onHandleAnswerClick (e) {
+    e.preventDefault()
+    // console.log('You picked answer', e.target.id)
+    this.setState({buttonclass: 'Ans-btnSelected'})
+    this.props.onAnswerSelect(e.target.id)
   }
 
   render () {
-    const answers = this.parseAnswerData();
-    console.log("DID I GET MY ANSWERS", answers)
+    const answers = this.parseAnswerData()
     return (
-      <div>
-        <button>{answers}</button>
-      </div>
+      answers.map((ansInArr, index) => {
+        return (
+          <button
+            id={ansInArr} key={index} className={this.state.buttonclass}
+            onClick={this.onHandleAnswerClick}
+            dangerouslySetInnerHTML={{__html: ansInArr}}>
+          </button>
+        )
+      })
     )
   }
 }

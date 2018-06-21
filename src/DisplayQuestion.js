@@ -1,34 +1,43 @@
 import React, {Component} from 'react'
-import './DisplayQuestions.css'
-import './DisplayAnswers'
 import DisplayAnswers from './DisplayAnswers'
 
 class DisplayQuestion extends Component {
+  constructor (props) {
+    super(props)
+    this.onAnswerSelect = this.onAnswerSelect.bind(this)
+  }
   parseQuestionData () {
     const questionArr =
-        this.props.trivia.map(questionItem => {
-          console.log('QuestionItem', questionItem)
+        this.props.trivia.map((questionItem, index) => {
           return (
-            <div className="DQ-base">
+            <div className="DQ-question">
+              <h4>Question: {index + 1}</h4>
               <p dangerouslySetInnerHTML={{__html: questionItem.question}} />
               <div>
-                <DisplayAnswers correctAns={questionItem.correct_answer}
-                  otherAns={questionItem.incorrect_answers} />
+                <DisplayAnswers key={index} correctAns={questionItem.correct_answer}
+                  otherAns={questionItem.incorrect_answers}
+                  onAnswerSelect={this.onAnswerSelect}/>
               </div>
             </div>
           )
         })
     return questionArr
   }
+
+  onAnswerSelect (anAnswer) {
+    this.props.onAppAnswerSelect(anAnswer)
+  }
+
   render () {
-    var questions = []
-    questions = this.parseQuestionData()
-    // console.log("My questions array", questions);
+    var questions = this.parseQuestionData()
     return (
-    // return question data
       <div>
-        <h1>Let me ask a question: {questions}</h1>
+        <h2>Let me ask you a question:</h2>
+        <div>
+          {questions}
+        </div>
       </div>
+
     )
   }
 }
