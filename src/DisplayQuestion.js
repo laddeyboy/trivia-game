@@ -14,7 +14,7 @@ class DisplayQuestion extends Component {
               <h4>Question: {index + 1}</h4>
               <p dangerouslySetInnerHTML={{__html: questionItem.question}} />
               <div>
-                <DisplayAnswers key={index} correctAns={questionItem.correct_answer}
+                <DisplayAnswers key={index} index={index} correctAns={questionItem.correct_answer}
                   otherAns={questionItem.incorrect_answers}
                   onAnswerSelect={this.onAnswerSelect}/>
               </div>
@@ -24,7 +24,8 @@ class DisplayQuestion extends Component {
     return questionArr
   }
 
-  onAnswerSelect (anAnswer) {
+  onAnswerSelect (anAnswer, index) {
+    console.log('index is???? ', index)
     this.props.onAppAnswerSelect(anAnswer)
   }
 

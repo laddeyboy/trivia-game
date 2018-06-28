@@ -20,8 +20,9 @@ class DisplayAnswers extends Component {
   onHandleAnswerClick (e) {
     e.preventDefault()
     // console.log('You picked answer', e.target.id)
-    this.setState({buttonclass: 'Ans-btnSelected'})
-    this.props.onAnswerSelect(e.target.id)
+    // this.setState({buttonclass: 'Ans-btnSelected'})
+    console.log('what is key? ', this.props.index)
+    this.props.onAnswerSelect(e.target.id, this.props.key)
   }
 
   render () {

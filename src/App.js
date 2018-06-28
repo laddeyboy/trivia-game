@@ -27,7 +27,14 @@ class App extends Component {
   }
 
   AnswerSelect (anAnswer) {
+    console.log('DEUG -> ', this.state.questions)
     console.log('Im in App.js with: ', anAnswer)
+    if (anAnswer === this.state.questions.correct_answer) {
+      console.log('You got it right')
+    } else {
+      console.log('You got it wrong')
+      console.log('Correct answer is: ', this.state.questions.correct_answer)
+    }
   }
 
   render () {
