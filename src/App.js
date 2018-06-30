@@ -2,18 +2,20 @@ import React, { Component } from 'react'
 import logo from './logo.svg'
 import axios from 'axios'
 import './App.css'
+import {Provider} from 'react-redux'
+import store from './redux_store'
+
+// Required Components
 import DisplayQuestion from './DisplayQuestion'
+
+// Redux Actions
+import {addQuestionsToQueue} from './redux_actions'
+import {connect} from 'react-redux'
 
 class App extends Component {
   constructor (props) {
     super(props)
-    this.state = {
-      userAnswers: [],
-      userPoints: 0,
-      questions: []
-    }
     this.getASetOfQuestions = this.getASetOfQuestions.bind(this)
-    this.AnswerSelect = this.AnswerSelect.bind(this)
   }
 
   getASetOfQuestions (e) {
@@ -21,20 +23,9 @@ class App extends Component {
     axios.get(apiURL)
       .then(response => {
         console.log('Success...questions received')
-        this.setState({questions: response.data})
+        this.props.addQuestions(response.data)
       })
       .catch(err => console.error(err))
-  }
-
-  AnswerSelect (anAnswer) {
-    console.log('DEUG -> ', this.state.questions)
-    console.log('Im in App.js with: ', anAnswer)
-    if (anAnswer === this.state.questions.correct_answer) {
-      console.log('You got it right')
-    } else {
-      console.log('You got it wrong')
-      console.log('Correct answer is: ', this.state.questions.correct_answer)
-    }
   }
 
   render () {
@@ -47,8 +38,11 @@ class App extends Component {
 
         <div>
           <button onClick={e => this.getASetOfQuestions(e)}>Lets Play!</button>
-          <DisplayQuestion trivia={this.state.questions}
-            onAppAnswerSelect={this.AnswerSelect}/>
+          {console.log('TESTING', this.props.questions)}
+          <h1>HELLO</h1>
+          {/* <DisplayQuestion trivia={this.state.questions}
+            onAppAnswerSelect={this.AnswerSelect}/> */}
+          {/* <DisplayQuestion /> */}
         </div>
 
       </div>
@@ -56,4 +50,17 @@ class App extends Component {
   }
 }
 
-export default App
+function mapStateToProps (state) {
+  return {
+    triviaQuestions: state.questions
+  }
+}
+function mapDispatchToProps (dispatch) {
+  return {
+    addQuestions: (data) => { dispatch(addQuestionsToQueue(data)) }
+  }
+}
+
+var ReduxTriviaApp = connect(mapStateToProps, mapDispatchToProps)(App)
+
+export default ReduxTriviaApp

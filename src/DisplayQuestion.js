@@ -1,5 +1,10 @@
 import React, {Component} from 'react'
+import {connect} from 'react-redux'
+
+// Sibling Components
 import DisplayAnswers from './DisplayAnswers'
+
+// Redux Actions
 
 class DisplayQuestion extends Component {
   constructor (props) {
@@ -43,4 +48,15 @@ class DisplayQuestion extends Component {
   }
 }
 
-export default DisplayQuestion
+function mapStateToProps (state) {
+  return {
+    triviaQuestions: state.questions
+  }
+}
+function mapDispatchToProps (dispatch) {
+  return 'hello'
+}
+
+var DisplayQuestions = connect(mapStateToProps, mapDispatchToProps)(DisplayQuestion)
+
+export default DisplayQuestions

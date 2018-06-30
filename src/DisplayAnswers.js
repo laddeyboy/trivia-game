@@ -29,8 +29,6 @@ class DisplayAnswers extends Component {
     const answers = this.parseAnswerData()
     return (
       answers.map((ansInArr, index) => {
-        console.log(this.state)
-        console.log('zzzzzzzzzzzzzzzzzzz')
         return (
           <button
             id={ansInArr} key={index} className={this.state.buttonclass}
