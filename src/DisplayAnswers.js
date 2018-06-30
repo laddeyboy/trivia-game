@@ -20,7 +20,7 @@ class DisplayAnswers extends Component {
   onHandleAnswerClick (e) {
     e.preventDefault()
     // console.log('You picked answer', e.target.id)
-    // this.setState({buttonclass: 'Ans-btnSelected'})
+    this.setState({buttonclass: 'Ans-btnSelected'})
     console.log('what is key? ', this.props.index)
     this.props.onAnswerSelect(e.target.id, this.props.key)
   }
@@ -29,6 +29,8 @@ class DisplayAnswers extends Component {
     const answers = this.parseAnswerData()
     return (
       answers.map((ansInArr, index) => {
+        console.log(this.state)
+        console.log('zzzzzzzzzzzzzzzzzzz')
         return (
           <button
             id={ansInArr} key={index} className={this.state.buttonclass}
