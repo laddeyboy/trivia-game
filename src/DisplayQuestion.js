@@ -35,12 +35,12 @@ class DisplayQuestion extends Component {
   }
 
   render () {
-    var questions = this.parseQuestionData()
+    // var questions = this.parseQuestionData()
     return (
       <div>
         <h2>Let me ask you a question:</h2>
         <div>
-          {questions}
+          {this.props.questions}
         </div>
       </div>
 
@@ -53,10 +53,7 @@ function mapStateToProps (state) {
     triviaQuestions: state.questions
   }
 }
-function mapDispatchToProps (dispatch) {
-  return 'hello'
-}
 
-var DisplayQuestions = connect(mapStateToProps, mapDispatchToProps)(DisplayQuestion)
+var DisplayQuestions = connect(mapStateToProps)(DisplayQuestion)
 
 export default DisplayQuestions

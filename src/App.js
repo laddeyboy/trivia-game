@@ -2,15 +2,14 @@ import React, { Component } from 'react'
 import logo from './logo.svg'
 import axios from 'axios'
 import './App.css'
-import {Provider} from 'react-redux'
-import store from './redux_store'
 
 // Required Components
-import DisplayQuestion from './DisplayQuestion'
+import './DisplayQuestion'
 
 // Redux Actions
 import {addQuestionsToQueue} from './redux_actions'
 import {connect} from 'react-redux'
+import DisplayQuestion from './DisplayQuestion'
 
 class App extends Component {
   constructor (props) {
@@ -29,6 +28,7 @@ class App extends Component {
   }
 
   render () {
+    const retrieveQuestionsAPI = (event) => this.getASetOfQuestions()
     return (
       <div className="App">
         <header className="App-header">
@@ -37,9 +37,8 @@ class App extends Component {
         </header>
 
         <div>
-          <button onClick={e => this.getASetOfQuestions(e)}>Lets Play!</button>
-          {console.log('TESTING', this.props.questions)}
-          <h1>HELLO</h1>
+          <button onClick={retrieveQuestionsAPI}>Get Questions</button>
+          <DisplayQuestion />
           {/* <DisplayQuestion trivia={this.state.questions}
             onAppAnswerSelect={this.AnswerSelect}/> */}
           {/* <DisplayQuestion /> */}
@@ -57,7 +56,10 @@ function mapStateToProps (state) {
 }
 function mapDispatchToProps (dispatch) {
   return {
-    addQuestions: (data) => { dispatch(addQuestionsToQueue(data)) }
+    addQuestions: (data) => {
+      console.log('sending data to dispatch')
+      dispatch(addQuestionsToQueue(data))
+    }
   }
 }
 

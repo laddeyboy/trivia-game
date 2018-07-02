@@ -9,11 +9,10 @@ export function triviaStore (state, action) {
     return initialState
   }
   switch (action.type) {
-    case 'ADD_NEW_QUESTION':
+    case 'ADD_NEW_QUESTIONS':
       // make a copy of the state
       var newState = {...state}
-      newState = {...state.questions}
-      // update state
+      newState.questions = [...state.questions]
       newState.questions.push(action.data)
       return newState
     default:
