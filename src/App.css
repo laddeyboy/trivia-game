@@ -41,3 +41,29 @@
   background-color: green;
   color: white;
 }
+
+.Intro-page-container {
+  height: 100vh;
+  background-color: blue;
+  color: white;
+}
+.Intro-page-content {
+  width: 500px;
+  height: 300px;
+  position: fixed;
+  top: 50%; left: 50%;
+  margin-left: -250px;
+  margin-top: -150px;
+  border: 3px solid white;
+  border-radius: 15px;
+}
+
+.Intro-page-content a {
+  color: white;
+}
+.Intro-page-content button {
+  margin-top: 1em;
+  font-size: 2em;
+  border-radius: 8px;
+}
+

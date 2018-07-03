@@ -38,7 +38,6 @@ class DisplayQuestion extends Component {
     // var questions = this.parseQuestionData()
     return (
       <div>
-        <h2>Let me ask you a question:</h2>
         <div>
           {this.props.questions}
         </div>

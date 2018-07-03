@@ -35,13 +35,18 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to my Trivia App</h1>
         </header>
-
-        <div>
-          <button onClick={retrieveQuestionsAPI}>Get Questions</button>
+        {/* Above is the native create-react-app header */}
+        {/* Below is the start of my React Trivia App */}
+        <div className="Intro-page-container">
+          <div className="Intro-page-content">
+            <h2>Riddle Me This...</h2>
+            <p>This is a project I'm creating for my DigitalCrafts Bootcamp in Houston.  It is powered by the <a href="https://opentdb.com/" target="blank">
+              Open Trivia Database</a> and built with React.  It's a work in progress, but I hope you enjoy.</p>
+            <p>This is starting out as a solo player game, with hopes/intent to make it muliplayer so you can play your friends.  Whoever gets the most points,
+              WINS!</p>
+            <button onClick={retrieveQuestionsAPI}>Let's Play</button>
+          </div>
           <DisplayQuestion />
-          {/* <DisplayQuestion trivia={this.state.questions}
-            onAppAnswerSelect={this.AnswerSelect}/> */}
-          {/* <DisplayQuestion /> */}
         </div>
 
       </div>
