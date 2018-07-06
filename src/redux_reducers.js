@@ -1,4 +1,5 @@
 var initialState = {
+  playerName: 'Player1',
   userAnswers: [],
   userPoints: 0,
   questions: []

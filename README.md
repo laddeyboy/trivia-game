@@ -25,7 +25,9 @@ Cors
 Socket.io
 
 Challenges:
-1) 
+1) Figuring out how to style a React Router <Link> when associating on a button element.
+-answer: you wrap the <Link></Link> tags around the button and style the button element normally.
+
 
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
