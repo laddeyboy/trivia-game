@@ -1,3 +1,7 @@
+Objective:
+Trivia App is my individual project for the DC Flex Spring 2018 Cohort.
+I am making an API to the openmovietrivia API on a backend express app.  This API is then served up via a JSON Response to my front end React App. 
+
 Info:
 Frontend Usage:
 create-react-app
@@ -9,6 +13,20 @@ nodemon
 socket.io
 axios
 
+Dependencies:
+Express
+Axios
+React
+Redux
+React-Redux
+Nodemon
+Create-React-App
+Cors
+Socket.io
+
+Challenges:
+1) Figuring out how to style a React Router <Link> when associating on a button element.
+-answer: you wrap the <Link></Link> tags around the button and style the button element normally.
 
 
 
@@ -19,8 +37,6 @@ You can find the most recent version of this guide [here](https://github.com/fac
 
 ## Table of Contents
 
-- [Updating to New Releases](#updating-to-new-releases)
-- [Sending Feedback](#sending-feedback)
 - [Folder Structure](#folder-structure)
 - [Available Scripts](#available-scripts)
   - [npm start](#npm-start)
