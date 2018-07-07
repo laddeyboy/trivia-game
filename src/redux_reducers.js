@@ -2,7 +2,8 @@ var initialState = {
   playerName: 'Player1',
   userAnswers: [],
   userPoints: 0,
-  questions: []
+  questions: [],
+  questionIndex: 0
 }
 
 export function triviaStore (state, action) {
