@@ -3,6 +3,7 @@ var initialState = {
   userAnswers: [],
   userPoints: 0,
   questions: [],
+  // questionIndex is going to have to keep track of where I'm at in my state questions array
   questionIndex: 0
 }
 

@@ -27,6 +27,10 @@ Socket.io
 Challenges:
 1) Figuring out how to style a React Router <Link> when associating on a button element.
 -answer: you wrap the <Link></Link> tags around the button and style the button element normally.
+2) I had to refactor my entire question JSON data structure.  I ran into issues where I was
+trying to manipulate JSX data outside of a render function.  Essentially, I was trying to build
+and entire array of JSX data and serve that up individually to React, instead of manipulating
+the data first and sending just the data to a React component.
 
 
 

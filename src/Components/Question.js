@@ -1,20 +1,29 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import '../ComponentsStyles/QuestionPage.css'
+import Answers from './Answer'
 
 class Question extends Component {
-  // constructor (props) {
-  //   super(props)
-  //   this.state = {
-  //     category: '',
-  //     type: '',
-  //     difficulty: '',
-  //     questions: '',
-  //     answers: []
-  //   }
-  //   this.combineAnswers = this.combineAnswers.bind(this)
-  //   this.parseQuestionData = this.parseQuestionData.bind(this)
-  // }
+  constructor (props) {
+    super(props)
+    this.parseQuestionData = this.parseQuestionData.bind(this)
+  }
+
+  parseQuestionData () {
+    const shortenTriviaVar = this.props.triviaQuestions[this.props.questionIndex]
+    console.log('[Question.js] in parseQuestionDate', shortenTriviaVar.question)
+    const questionArr =
+      shortenTriviaVar.map((questionItem, index) => {
+        return (
+          <div>
+            <h4>Question: {index + 1}</h4>
+            <p dangerouslySetInnerHTML={{__html: questionItem.question}} />
+            <Answers answers={questionItem}/>
+          </div>
+        )
+      })
+    return questionArr
+  }
 
   render () {
     // const questions = this.parseQuestionData()
@@ -22,7 +31,7 @@ class Question extends Component {
       <div className="questions">
         <p>Test</p>
         {console.log('[Question.js] props is: ', this.props.triviaQuestions)}
-        <p>{this.props.triviaQuestions[this.props.questionIndex][0].question}</p>
+        {/* {questions[0]} */}
       </div>
     )
   }
