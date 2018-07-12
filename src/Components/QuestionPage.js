@@ -9,16 +9,9 @@ import fetchAllQuestions from '../fetchQuestions'
 import {connect} from 'react-redux'
 import {addQuestionsToQueue, incrementQuestionCounter,
   incrementQuestionSetCounter, enableAnswerButtons,
-  toggleEndOfQuestions, toggleQuestionsLoading} from '../redux_actions'
+  toggleEndOfQuestions, toggleQuestionsAPICall} from '../redux_actions'
 
 class QuestionPage extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      isLoading: true
-    }
-  }
-
   retrieveNextQuestion (event) {
     this.props.incrementQuestionCtr(1)
     this.props.enableBtn()
@@ -33,7 +26,7 @@ class QuestionPage extends Component {
     fetchQuestionsPromise
       .then(response => {
         this.props.addQuestions(response)
-        this.setState({ isLoading: false })
+        this.props.toggleQuestionAPICall(!this.props.isLoading)
       }).catch(err => console.error(err))
   }
 
@@ -42,7 +35,7 @@ class QuestionPage extends Component {
       <div className="Intro-page-container">
         <div className="question-container">
           <h1 className="userName">{this.props.playerName}</h1>
-          {!this.state.isLoading && <Question />}
+          {!this.props.isLoading && <Question />}
           <div>
             {!this.props.endOfQuestions &&
             <button onClick={() => this.retrieveNextQuestion()}>Next Question</button> }
@@ -64,7 +57,7 @@ function mapStateToProps (state) {
     questionSet: state.questionSetNumber,
     disabledBtn: state.disabledButton,
     endOfQuestions: state.endOfQuestions,
-    isLoading: state.questionsAreLoading
+    isLoading: state.questionPageIsLoading
   }
 }
 function mapDispatchToProps (dispatch) {
@@ -84,8 +77,8 @@ function mapDispatchToProps (dispatch) {
     toggleQuestionsFlag: (data) => {
       dispatch(toggleEndOfQuestions(data))
     },
-    toggleQuestionsLoad: (data) => {
-      dispatch(toggleQuestionsLoading(data))
+    toggleQuestionAPICall: (data) => {
+      dispatch(toggleQuestionsAPICall(data))
     }
   }
 }

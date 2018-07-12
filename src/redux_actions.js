@@ -8,6 +8,7 @@ const DISABLE_BUTTON = 'DISABLE_ANSWER_BUTTON'
 const ENABLE_BUTTON = 'ENABLE_ANSWER_BUTTON'
 const ADD_POINT = 'ADD_POINT'
 const QUESTIONS_IS_LOADING = 'QUESTIONS_IS_LOADING'
+const RESET_QUESTION_ARRAY_COUNTER = 'RESET_QUESTION_ARRAY_COUNTER'
 
 export function addQuestionsToQueue (data) {
   return {
@@ -37,10 +38,9 @@ export function incrementQuestionCounter (data) {
   }
 }
 
-export function incrementQuestionSetCounter (data) {
+export function incrementQuestionSetCounter () {
   return {
-    type: INCREMENT_QUESTION_SET_CTR,
-    data: data
+    type: INCREMENT_QUESTION_SET_CTR
   }
 }
 
@@ -65,9 +65,15 @@ export function addUserPoint () {
   }
 }
 
-export function toggleQuestionsLoading (data) {
+export function toggleQuestionsAPICall (data) {
   return {
     type: QUESTIONS_IS_LOADING,
     data: data
+  }
+}
+
+export function resetQuestionArrCounter () {
+  return {
+    type: RESET_QUESTION_ARRAY_COUNTER
   }
 }

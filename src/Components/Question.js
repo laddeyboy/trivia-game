@@ -12,8 +12,6 @@ class Question extends Component {
     if (correctAnswer.correct) {
       this.props.addPoint()
     }
-    console.log('[Question.js] you picked', userAnswer)
-    console.log('[Question.js] your answer is: ', correctAnswer.correct)
     this.props.disableBtn()
   }
 

@@ -5,17 +5,23 @@ import fetchAllQuestions from '../fetchQuestions'
 import {connect} from 'react-redux'
 import {addQuestionsToQueue, incrementQuestionCounter,
   incrementQuestionSetCounter, enableAnswerButtons,
-  toggleEndOfQuestions} from '../redux_actions'
+  toggleEndOfQuestions, toggleQuestionsAPICall,
+  resetQuestionArrCounter} from '../redux_actions'
 
 class Intermission extends Component {
   getMoreQuestions (event) {
+    this.props.toggleQuestionAPICall(!this.props.isLoading)
     console.log('[Intermission.js] In getMoreQuestions')
     const fetchQuestionsPromise = fetchAllQuestions()
     fetchQuestionsPromise
       .then(response => {
         this.props.addQuestions(response)
-        this.setState({ isLoading: false })
+        this.props.toggleQuestionAPICall(!this.props.isLoading)
+        this.props.incrementSetCtr()
+        this.props.toggleQuestionsFlag(!this.props.endOfQuestions)
+        // reset question array counter
       }).catch(err => console.error(err))
+    this.props.resetQuestionArrayCtr()
   }
 
   render () {
@@ -36,7 +42,8 @@ function mapStateToProps (state) {
     questionIndex: state.questionIndex,
     questionSet: state.questionSetNumber,
     disabledBtn: state.disabledButton,
-    endOfQuestions: state.endOfQuestions
+    endOfQuestions: state.endOfQuestions,
+    isLoading: state.questionPageIsLoading
   }
 }
 function mapDispatchToProps (dispatch) {
@@ -47,15 +54,22 @@ function mapDispatchToProps (dispatch) {
     incrementQuestionCtr: (data) => {
       dispatch(incrementQuestionCounter(data))
     },
-    incrementSetCtr: (data) => {
-      dispatch(incrementQuestionSetCounter(data))
+    incrementSetCtr: () => {
+      dispatch(incrementQuestionSetCounter())
     },
     enableBtn: () => {
       dispatch(enableAnswerButtons())
     },
     toggleQuestionsFlag: (data) => {
       dispatch(toggleEndOfQuestions(data))
+    },
+    toggleQuestionAPICall: (data) => {
+      dispatch(toggleQuestionsAPICall(data))
+    },
+    resetQuestionArrayCtr: () => {
+      dispatch(resetQuestionArrCounter())
     }
+
   }
 }
 

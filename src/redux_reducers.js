@@ -8,7 +8,7 @@ var initialState = {
   questionSetNumber: 0,
   disabledButton: true,
   endOfQuestions: false,
-  questionsAreLoading: true
+  questionPageIsLoading: true
 }
 
 export function triviaStore (state, action) {
@@ -49,9 +49,13 @@ export function triviaStore (state, action) {
       newState = {...state}
       newState.endOfQuestions = action.data
       return newState
-    case 'TOGGLE_QUESTION_LOAD_FLAG':
+    case 'QUESTIONS_IS_LOADING':
       newState = {...state}
-      newState.questionsAreLoading = action.data
+      newState.questionPageIsLoading = action.data
+      return newState
+    case 'RESET_QUESTION_ARRAY_COUNTER':
+      newState = {...state}
+      newState.questionIndex = 0
       return newState
     default:
       return state
