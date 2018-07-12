@@ -2,36 +2,34 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import '../ComponentsStyles/QuestionPage.css'
 import Answers from './Answer'
+import { disableAnswerButtons, addUserPoint } from '../redux_actions'
 
 class Question extends Component {
-  constructor (props) {
-    super(props)
-    this.parseQuestionData = this.parseQuestionData.bind(this)
-  }
-
-  parseQuestionData () {
-    const shortenTriviaVar = this.props.triviaQuestions[this.props.questionIndex]
-    console.log('[Question.js] in parseQuestionDate', shortenTriviaVar.question)
-    const questionArr =
-      shortenTriviaVar.map((questionItem, index) => {
-        return (
-          <div>
-            <h4>Question: {index + 1}</h4>
-            <p dangerouslySetInnerHTML={{__html: questionItem.question}} />
-            <Answers answers={questionItem}/>
-          </div>
-        )
-      })
-    return questionArr
+  checkAnswer (event) {
+    let userAnswer = event.target.value
+    const currentAnswerSet =
+      this.props.triviaQuestions[this.props.questionSetNumber][this.props.questionIndex].answers
+    let correctAnswer = currentAnswerSet.find((answer) => userAnswer === answer.answer)
+    if (correctAnswer.correct) {
+      this.props.addPoint()
+    }
+    console.log('[Question.js] you picked', userAnswer)
+    console.log('[Question.js] your answer is: ', correctAnswer.correct)
+    this.props.disableBtn()
   }
 
   render () {
-    // const questions = this.parseQuestionData()
+    const currentQuestionSet = this.props.triviaQuestions[this.props.questionSetNumber]
+    let questionIndex = this.props.questionIndex
     return (
       <div className="questions">
-        <p>Test</p>
-        {console.log('[Question.js] props is: ', this.props.triviaQuestions)}
-        {/* {questions[0]} */}
+        <p>Question {this.props.questionIndex + 1}</p>
+        <p dangerouslySetInnerHTML={{__html: currentQuestionSet[questionIndex].question}} />
+        <p>{currentQuestionSet[questionIndex].answers.map((anAnswer, index) => {
+          return <button key={index} value={anAnswer.answer}
+            onClick={(e) => this.checkAnswer(e)} disabled={!this.props.disabledButton}
+            dangerouslySetInnerHTML={{__html: anAnswer.answer}}/>
+        })}</p>
       </div>
     )
   }
@@ -39,10 +37,25 @@ class Question extends Component {
 function mapStateToProps (state) {
   return {
     triviaQuestions: state.questions,
-    questionIndex: state.questionIndex
+    questionIndex: state.questionIndex,
+    userAnswers: state.userAnswers,
+    questionSetNumber: state.questionSetNumber,
+    disabledButton: state.disabledButton,
+    userPoints: state.userPoints
   }
 }
 
-var Questions = connect(mapStateToProps)(Question)
+function mapDispatchToProps (dispatch) {
+  return {
+    disableBtn: () => {
+      dispatch(disableAnswerButtons())
+    },
+    addPoint: () => {
+      dispatch(addUserPoint())
+    }
+  }
+}
+
+var Questions = connect(mapStateToProps, mapDispatchToProps)(Question)
 
 export default Questions

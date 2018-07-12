@@ -1,7 +1,4 @@
 import React, {Component} from 'react'
-import {connect} from 'react-redux'
-import axios from 'axios'
-
 import '../ComponentsStyles/QuestionPage.css'
 
 // Sibling Components
@@ -9,7 +6,8 @@ import DisplayAnswers from './DisplayAnswers'
 import Question from './Question'
 import fetchAllQuestions from '../fetchQuestions'
 // Redux Actions
-import {addQuestionsToQueue} from '../redux_actions'
+import {connect} from 'react-redux'
+import {addQuestionsToQueue, incrementQuestionCounter, incrementQuestionSetCounter, enableAnswerButtons} from '../redux_actions'
 
 class QuestionPage extends Component {
   constructor (props) {
@@ -19,8 +17,9 @@ class QuestionPage extends Component {
     }
   }
 
-  retrieveNextQuestion () {
-    console.log('[QuestionPage.js] retrieveNext Question')
+  retrieveNextQuestion (event) {
+    this.props.incrementQuestionCtr(1)
+    this.props.enableBtn()
   }
 
   componentDidMount () {
@@ -33,17 +32,14 @@ class QuestionPage extends Component {
   }
 
   render () {
-    // var questions = this.parseQuestionData()
     return (
-
       <div className="Intro-page-container">
         <div className="question-container">
           <h1 className="userName">{this.props.playerName}</h1>
           {!this.state.isLoading && <Question />}
-          <div className="answers">ANSWERS
-            <button onClick={this.retrieveNextQuestion}>Next Question</button>
+          <div>
+            <button onClick={() => this.retrieveNextQuestion()}>Next Question</button>
           </div>
-
           <div className="userPoints">Points: {this.props.userPoints}</div>
         </div>
       </div>
@@ -55,14 +51,24 @@ function mapStateToProps (state) {
   return {
     playerName: state.playerName,
     userPoints: state.userPoints,
-    triviaQuestions: state.questions
+    triviaQuestions: state.questions,
+    questionIndex: state.questionIndex,
+    disabledBtn: state.disabledButton
   }
 }
 function mapDispatchToProps (dispatch) {
   return {
     addQuestions: (data) => {
-      console.log('[QuestionPage.js] sending data to dispatch')
       dispatch(addQuestionsToQueue(data))
+    },
+    incrementQuestionCtr: (data) => {
+      dispatch(incrementQuestionCounter(data))
+    },
+    incrementSetCtr: (data) => {
+      dispatch(incrementQuestionSetCounter(data))
+    },
+    enableBtn: () => {
+      dispatch(enableAnswerButtons())
     }
   }
 }
