@@ -2,12 +2,14 @@ import React, {Component} from 'react'
 import '../ComponentsStyles/QuestionPage.css'
 
 // Sibling Components
-import DisplayAnswers from './DisplayAnswers'
 import Question from './Question'
+import Intermission from './Intermission'
 import fetchAllQuestions from '../fetchQuestions'
 // Redux Actions
 import {connect} from 'react-redux'
-import {addQuestionsToQueue, incrementQuestionCounter, incrementQuestionSetCounter, enableAnswerButtons} from '../redux_actions'
+import {addQuestionsToQueue, incrementQuestionCounter,
+  incrementQuestionSetCounter, enableAnswerButtons,
+  toggleEndOfQuestions, toggleQuestionsLoading} from '../redux_actions'
 
 class QuestionPage extends Component {
   constructor (props) {
@@ -20,6 +22,10 @@ class QuestionPage extends Component {
   retrieveNextQuestion (event) {
     this.props.incrementQuestionCtr(1)
     this.props.enableBtn()
+    if (this.props.questionIndex === this.props.triviaQuestions[this.props.questionSet].length - 2) {
+      this.props.toggleQuestionsFlag(!this.props.endOfQuestions)
+      // show end of game or retrieve more questions buttons
+    }
   }
 
   componentDidMount () {
@@ -38,7 +44,9 @@ class QuestionPage extends Component {
           <h1 className="userName">{this.props.playerName}</h1>
           {!this.state.isLoading && <Question />}
           <div>
-            <button onClick={() => this.retrieveNextQuestion()}>Next Question</button>
+            {!this.props.endOfQuestions &&
+            <button onClick={() => this.retrieveNextQuestion()}>Next Question</button> }
+            {this.props.endOfQuestions && <Intermission />}
           </div>
           <div className="userPoints">Points: {this.props.userPoints}</div>
         </div>
@@ -53,7 +61,10 @@ function mapStateToProps (state) {
     userPoints: state.userPoints,
     triviaQuestions: state.questions,
     questionIndex: state.questionIndex,
-    disabledBtn: state.disabledButton
+    questionSet: state.questionSetNumber,
+    disabledBtn: state.disabledButton,
+    endOfQuestions: state.endOfQuestions,
+    isLoading: state.questionsAreLoading
   }
 }
 function mapDispatchToProps (dispatch) {
@@ -69,6 +80,12 @@ function mapDispatchToProps (dispatch) {
     },
     enableBtn: () => {
       dispatch(enableAnswerButtons())
+    },
+    toggleQuestionsFlag: (data) => {
+      dispatch(toggleEndOfQuestions(data))
+    },
+    toggleQuestionsLoad: (data) => {
+      dispatch(toggleQuestionsLoading(data))
     }
   }
 }

@@ -15,13 +15,17 @@ function shuffleAnswers (anArrayOfAnswers) {
   return anArrayOfAnswers
 }
 
-function formatTriviaAnswers (correctAns, incorrectAnsArr) {
+function formatTriviaAnswers (correctAns, incorrectAnsArr, questionType) {
   var answerArr = []
   answerArr.push({answer: correctAns, correct: true})
   for (let i = 0; i < incorrectAnsArr.length; i++) {
     answerArr.push({answer: incorrectAnsArr[i], correct: false})
   }
-  return shuffleAnswers(answerArr)
+  if (questionType === 'boolean') {
+    return answerArr
+  } else {
+    return shuffleAnswers(answerArr)
+  }
 }
 
 function formatTriviaData (APIdata) {
@@ -31,7 +35,10 @@ function formatTriviaData (APIdata) {
       type: questionItem.type,
       difficulty: questionItem.difficulty,
       question: questionItem.question,
-      answers: formatTriviaAnswers(questionItem.correct_answer, questionItem.incorrect_answers)
+      answers: formatTriviaAnswers(
+        questionItem.correct_answer,
+        questionItem.incorrect_answers,
+        questionItem.type)
     }
   })
   return newQuestionSet

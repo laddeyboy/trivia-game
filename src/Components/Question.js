@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import '../ComponentsStyles/QuestionPage.css'
-import Answers from './Answer'
 import { disableAnswerButtons, addUserPoint } from '../redux_actions'
 
 class Question extends Component {
@@ -23,6 +22,7 @@ class Question extends Component {
     let questionIndex = this.props.questionIndex
     return (
       <div className="questions">
+        {console.log('[Question.js] my props are ', this.props.triviaQuestions)}
         <p>Question {this.props.questionIndex + 1}</p>
         <p dangerouslySetInnerHTML={{__html: currentQuestionSet[questionIndex].question}} />
         <p>{currentQuestionSet[questionIndex].answers.map((anAnswer, index) => {

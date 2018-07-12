@@ -6,7 +6,9 @@ var initialState = {
   // questionIndex is going to have to keep track of where I'm at in my state questions array
   questionIndex: 0,
   questionSetNumber: 0,
-  disabledButton: true
+  disabledButton: true,
+  endOfQuestions: false,
+  questionsAreLoading: true
 }
 
 export function triviaStore (state, action) {
@@ -25,11 +27,11 @@ export function triviaStore (state, action) {
       return newState
     case 'INCREMENT_QUESTION_CTR':
       newState = {...state}
-      newState.questionIndex = newState.questionIndex + 1
+      newState.questionIndex++
       return newState
     case 'INCREMENT_QUESTION_SET_CTR':
       newState = {...state}
-      newState.questionSetNumber = newState.questionSetNumber + 1
+      newState.questionSetNumber++
       return newState
     case 'DISABLE_ANSWER_BUTTON':
       newState = {...state}
@@ -41,7 +43,15 @@ export function triviaStore (state, action) {
       return newState
     case 'ADD_POINT':
       newState = {...state}
-      newState.userPoints = newState.userPoints + 1
+      newState.userPoints++
+      return newState
+    case 'END_OF_QUESTIONS':
+      newState = {...state}
+      newState.endOfQuestions = action.data
+      return newState
+    case 'TOGGLE_QUESTION_LOAD_FLAG':
+      newState = {...state}
+      newState.questionsAreLoading = action.data
       return newState
     default:
       return state
