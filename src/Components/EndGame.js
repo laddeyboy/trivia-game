@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 class EndGame extends React.Component {
   render () {
     return (
-      <div>
+      <div className="question-container">
         <h1>Thanks for playing, {this.props.playerName}!</h1>
         <h3>You finished the game with {this.props.userPoints} point</h3>
         <button>Play Again?</button>
