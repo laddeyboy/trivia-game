@@ -21,6 +21,7 @@ app.get('*', function (req, resp) {
   resp.sendFile(_dirName + '/build/index.html')
 })
 
-app.listen(8080, function () {
-  console.log('Listening on port 8080')
+const PORT = process.env.PORT || 8080
+app.listen(PORT, function () {
+  console.log('Listening on port ' + PORT)
 })
