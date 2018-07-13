@@ -45,7 +45,11 @@ function formatTriviaData (APIdata) {
 }
 
 function fetchAllQuestions () {
-  const apiURL = 'http://localhost:8080/api/get-questions'
+  var apiURL = '/api/get-questions'
+  if (window.location.host === 'localhost:3000') {
+    apiURL = 'http://localhost:8080' + apiURL
+  }
+
   return axios.get(apiURL)
     .then(response => {
       console.log('Success...questions received')
